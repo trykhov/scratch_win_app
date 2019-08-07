@@ -18,15 +18,15 @@ export default class App extends React.Component {
   // when app loads up
   componentDidMount() {
     // generate random number
-    this.setState({ randomNum: Math.floor(Math.random() * 25) });
-    Alert.alert(this.state.randomNum);
+    this.setState({ randomNum: this.generateRandomNum() });
   };
 
-  // generateRandomNum = () => {
-  //   let randomNum = Math.floor(Math.random() * 25);
-  //   this.setState({ randomNum });
-  //   Alert.alert(this.state.randomNum);
-  // };
+  generateRandomNum = () => {
+    let randomNum = Math.floor(Math.random() * 25);
+    this.setState({ randomNum, isScratched: true });
+    // Alert.alert(randomNum);
+    return randomNum;
+  };
 
   scratchItem = itemNum => {
     // decide lucky or unlucky
@@ -99,8 +99,8 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View>
-          <Text>Scratch and Win</Text>
+        <View style={styles.topBar}>
+          <Text style={styles.topText}>Scratch and Win</Text>
         </View>
         <View style={styles.grid}>
           <View style={styles.itemRow}>
@@ -119,6 +119,12 @@ export default class App extends React.Component {
             {this.generateRow(20)}
           </View>
         </View>
+        <Button full success style={styles.button} onPress={() => this.showAllItem()}>
+          <Text style={styles.buttonText}>Show all coupons</Text>
+        </Button>
+        <Button full primary style={styles.button} onPress={() => this.resetGame()}>
+          <Text style={styles.buttonText}>Reset</Text>
+        </Button>
       </View>
     )
   }
@@ -142,6 +148,25 @@ const styles = StyleSheet.create({
     padding: 10,
     borderWidth: 2,
     borderColor: "#000",
-    minWidth: 17
+    minWidth: 70
+  },
+  button: {
+    marginVertical: 15
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold"
+  },
+  topBar: {
+    backgroundColor: "#8B78E6",
+    height: 50,
+    justifyContent: "center",
+    width: Dimensions.get("window").width,
+    marginVertical: 20
+  },
+  topText: {
+    color: "#FFF",
+    textAlign: "center"
   }
 });
